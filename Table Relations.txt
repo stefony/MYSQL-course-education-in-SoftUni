@@ -1,0 +1,259 @@
+1.Insert the data from the example above.
+
+· Alter table people and make person_id a primary key.
+
+· Create a foreign key between people and passports by using the passport_id column.
+
+· Think about which passport field should be UNIQUE.
+
+· Format salary to second digit after decimal point.
+
+CREATE TABLE people (
+    person_id INT AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    salary DECIMAL(10,2),
+    passport_id INT,
+    PRIMARY KEY (person_id)
+);
+
+
+CREATE TABLE passports (
+    passport_id INT AUTO_INCREMENT,
+    passport_number VARCHAR(20),
+    PRIMARY KEY (passport_id),
+    UNIQUE (passport_number)
+);
+
+
+INSERT INTO people (person_id, first_name, salary, passport_id) VALUES
+(1, 'Roberto', 43300.00, 102),
+(2, 'Tom', 56100.00, 103),
+(3, 'Yana', 60200.00, 101);
+
+
+INSERT INTO passports (passport_id, passport_number) VALUES
+(101, 'N34FG21B'),
+(102, 'K65LO4R7'),
+(103, 'ZE657QP2');
+
+
+ALTER TABLE people
+ADD FOREIGN KEY (passport_id)
+REFERENCES passports(passport_id);
+
+
+ALTER TABLE passports
+ADD UNIQUE (passport_number);
+
+
+
+2.Create two tableс.Insert the data from the example above.
+
+· Add primary and foreign keys.
+
+
+CREATE TABLE manufacturers(
+manufacturer_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(20),
+established_on DATETIME
+);
+
+CREATE TABLE  models(
+model_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(20),
+manufacturer_id INT,
+FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id)
+);
+
+INSERT INTO manufacturers (manufacturer_id,name,established_on)
+VALUES
+(1,'BMW','1916-03-01'),
+(2,'Tesla','2003-01-01'),
+(3,'Lada','1966-05-01');
+
+INSERT INTO models(model_id,name,manufacturer_id)
+VALUES
+(101,'X1',1),
+(102,'i6',1),
+(103,'Model S',2),
+(104,'Model X',2),
+(105,'Model 3',2),
+(106,'Nova',3);
+
+
+3.Create three tables.Insert the data from the example above.
+
+· Add primary and foreign keys.
+
+· Have in mind that the table student_exams should have a composite primary key.
+CREATE TABLE students(
+student_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(20)
+);
+
+CREATE TABLE exams(
+exam_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(20)
+);
+
+CREATE TABLE students_exams(
+student_id INT,
+exam_id INT,
+PRIMARY KEY(student_id,exam_id),
+FOREIGN KEY(student_id) REFERENCES students(student_id),
+FOREIGN KEY(exam_id) REFERENCES exams(exam_id)
+);
+
+INSERT INTO students(student_id,name)
+VALUES
+(1,'Mila'),
+(2,'Toni'),
+(3,'Ron');
+
+INSERT INTO exams(exam_id,name)
+VALUES 
+(101,'Spring MVC'),
+(102,'Neo4j'),
+(103,'Oracle 11g');
+
+INSERT INTO students_exams(student_id,exam_id)
+VALUES
+(1,101),
+(1,102),
+(2,101),
+(3,103),
+(2,102),
+(2,103);
+
+
+4.Create a single table.Insert the data from the example above.
+
+· Add primary and foreign keys.
+
+· The foreign key should be between manager_id and teacher_id.
+CREATE TABLE teachers (
+    teacher_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES teachers(teacher_id)
+);
+
+
+INSERT INTO teachers (teacher_id, name) VALUES
+(101, 'John'),
+(102, 'Maya'),
+(103, 'Silvia'),
+(104, 'Ted'),
+(105, 'Mark'),
+(106, 'Greta');
+
+
+UPDATE teachers SET manager_id = NULL WHERE teacher_id = 101; 
+UPDATE teachers SET manager_id = 106 WHERE teacher_id IN (102, 103); 
+UPDATE teachers SET manager_id = 105 WHERE teacher_id = 104; 
+UPDATE teachers SET manager_id = 101 WHERE teacher_id IN (105, 106); 
+
+
+SELECT * FROM teachers;
+
+
+ALTER TABLE teachers
+ADD CONSTRAINT fk_manager_id FOREIGN KEY (manager_id) REFERENCES teachers(teacher_id); 
+
+
+5.Create a new database and desig
+CREATE TABLE cities (
+    city_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50)
+);
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    birthday DATE,
+    city_id INT,
+    FOREIGN KEY (city_id) REFERENCES cities(city_id)
+);
+
+CREATE TABLE item_types (
+    item_type_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50)
+);
+
+CREATE TABLE items (
+    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    item_type_id INT,
+    FOREIGN KEY (item_type_id) REFERENCES item_types(item_type_id)
+);
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE order_items (
+    order_id INT,
+    item_id INT,
+    PRIMARY KEY (order_id, item_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (item_id) REFERENCES items(item_id)
+);
+
+
+6.Create a new database
+CREATE TABLE majors(
+major_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(50)
+);
+
+CREATE TABLE students(
+student_id INT PRIMARY KEY AUTO_INCREMENT,
+student_number VARCHAR(12),
+student_name VARCHAR(50),
+major_id INT,
+FOREIGN KEY(major_id) REFERENCES majors(major_id)
+);
+
+CREATE TABLE payments(
+payment_id INT PRIMARY KEY AUTO_INCREMENT,
+payment_date DATE,
+payment_amount DECIMAL(8,2),
+student_id INT,
+FOREIGN KEY(student_id) REFERENCES students(student_id)
+);
+
+CREATE TABLE subjects(
+subject_id INT PRIMARY KEY AUTO_INCREMENT,
+subject_name VARCHAR(50)
+);
+
+CREATE TABLE agenda(
+student_id INT,
+subject_id INT,
+PRIMARY KEY(student_id,subject_id),
+FOREIGN KEY(student_id) REFERENCES students(student_id),
+FOREIGN KEY(subject_id) REFERENCES subjects(subject_id)
+);
+
+7.Display all peaks for "Rila" mountain_range. Include:
+
+· mountain_range
+
+· peak_name
+
+· peak_elevation
+
+Peaks should be sorted by peak_elevation descending.
+
+SELECT 
+m.mountain_range, 
+p.peak_name, 
+p.elevation AS peak_elevation
+FROM peaks p
+JOIN mountains m ON p.mountain_id = m.id
+WHERE m.mountain_range = 'Rila'
+ORDER BY p.elevation DESC;
+
+8.

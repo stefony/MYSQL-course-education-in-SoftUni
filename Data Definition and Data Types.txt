@@ -1,0 +1,305 @@
+1.CREATE TABLE minions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    age INT
+);
+
+CREATE TABLE towns (
+    town_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255)
+);
+
+2.ALTER TABLE minions
+ADD COLUMN town_id INT,
+ADD CONSTRAINT fk_town_id
+    FOREIGN KEY (town_id)
+    REFERENCES towns(id);
+
+3.INSERT INTO towns (id,name)
+VALUES 
+(1,"Sofia"),
+(2,"Plovdiv"),
+(3,"Varna");
+
+INSERT INTO minions(id,name,age, town_id)
+VALUES
+(1,"Kevin",22,1),
+(2,"Bob",15,3),
+(3,"Steward",NULL,2);
+
+4.TRUNCATE TABLE minions;
+
+5.DROP TABLE towns;
+DROP TABLE minions;
+
+6.CREATE TABLE people(
+id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(255) NOT NULL,
+picture BLOB,
+height FLOAT(2),
+weight FLOAT(2),
+gender CHAR NOT NULL CHECK (gender = 'm' OR gender = 'f'),
+birthdate DATETIME NOT NULL,
+biography BLOB
+);
+
+INSERT INTO people(name,picture,height,weight,gender,birthdate,biography)
+VALUES
+("Stefan Hristov",NULL,1.80,90,'m','1974-01-21','Stefan Hristov is an example person'),
+("Ivan Hristov",NULL,1.85,80,'m','1975-06-21','Ivan Hristov is an example person'),
+("Petar Hristov",NULL,1.90,100,'m','1978-01-21','Petar Hristov is an example person'),
+("Stefan Petrov",NULL,2.00,110,'m','1980-01-21','Stefan Petrov is an example person'),
+("Ivan Ivanov",NULL,1.70,70,'m','1971-05-21','Ivan Ivanov is an example person');
+
+
+7.CREATE TABLE users (
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(30),
+password VARCHAR(26),
+profile_picture BLOB,
+last_login_time TIMESTAMP,
+is_deleted  BOOLEAN
+);
+
+
+INSERT INTO users(username,password,profile_picture,last_login_time,is_deleted)
+VALUES
+("Stefan Hristov",'pass1',NULL,'2024-01-12',true),
+("Ivan Hristov",'pass2',NULL,'2024-01-12',true),
+("Petar Hristov",'pass3',NULL,'2024-01-12',true),
+("Stefan Petrov",'pass4',NULL,'2024-01-12',true),
+("Ivan Ivanov",'pass5',NULL,'2024-01-12',true);
+
+8.ALTER TABLE users
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (id, username);
+
+9.ALTER TABLE users
+MODIFY COLUMN last_login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+10.ALTER TABLE users
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (id),
+ADD CONSTRAINT uk_username UNIQUE (username);
+
+
+11.--Create the 'directors' table
+CREATE TABLE directors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    director_name VARCHAR(255) NOT NULL,
+    notes TEXT
+);
+
+-- Create the 'genres' table
+CREATE TABLE genres (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    genre_name VARCHAR(255) NOT NULL,
+    notes TEXT
+);
+
+-- Create the 'categories' table
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL,
+    notes TEXT
+);
+
+-- Create the 'movies' table
+CREATE TABLE movies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    director_id INT,
+    copyright_year INT,
+    length INT,
+    genre_id INT,
+    category_id INT,
+    rating DECIMAL(3,1),
+    notes TEXT,
+    FOREIGN KEY (director_id) REFERENCES directors(id),
+    FOREIGN KEY (genre_id) REFERENCES genres(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+-- Populate the 'directors' table with 5 records
+INSERT INTO directors (director_name, notes) VALUES
+    ('Steven Spielberg', 'One of the most influential directors in Hollywood.'),
+    ('Christopher Nolan', 'Known for his mind-bending films.'),
+    ('Quentin Tarantino', 'Famous for his unique storytelling and style.'),
+    ('Greta Gerwig', 'Acclaimed director and writer.'),
+    ('Martin Scorsese', 'Renowned for his work in crime films.');
+
+-- Populate the 'genres' table with 5 records
+INSERT INTO genres (genre_name, notes) VALUES
+    ('Action', 'Exciting and fast-paced films.'),
+    ('Drama', 'Character-driven narratives.'),
+    ('Comedy', 'Intended to make the audience laugh.'),
+    ('Sci-Fi', 'Deals with futuristic or speculative concepts.'),
+    ('Thriller', 'Keeps the audience on the edge of their seats.');
+
+-- Populate the 'categories' table with 5 records
+INSERT INTO categories (category_name, notes) VALUES
+    ('Adventure', 'Movies that take the audience on a journey.'),
+    ('Mystery', 'Involves solving a mysterious event or crime.'),
+    ('Romance', 'Focuses on romantic relationships.'),
+    ('Horror', 'Intended to scare or horrify the audience.'),
+    ('Biography', 'Based on the life of real individuals.');
+
+-- Populate the 'movies' table with 5 records
+INSERT INTO movies (title, director_id, copyright_year, length, genre_id, category_id, rating, notes) VALUES
+    ('Jurassic Park', 1, 1993, 127, 1, 1, 8.1, 'Classic Spielberg film with dinosaurs.'),
+    ('Inception', 2, 2010, 148, 4, 2, 8.8, 'Mind-bending thriller directed by Christopher Nolan.'),
+    ('Pulp Fiction', 3, 1994, 154, 1, 4, 8.9, 'Quentin Tarantino\'s iconic crime film.'),
+    ('Lady Bird', 4, 2017, 94, 2, 3, 7.4, 'Greta Gerwig\'s coming-of-age comedy-drama.'),
+    ('Goodfellas', 5, 1990, 146, 1, 5, 8.7, 'Martin Scorsese\'s classic crime film.');
+
+12.CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(50) NOT NULL,
+    daily_rate DECIMAL(8, 2) NOT NULL,
+    weekly_rate DECIMAL(8, 2) NOT NULL,
+    monthly_rate DECIMAL(8, 2) NOT NULL,
+    weekend_rate DECIMAL(8, 2) NOT NULL
+);
+
+-- Create the 'cars' table
+CREATE TABLE cars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plate_number VARCHAR(20) NOT NULL,
+    make VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    car_year YEAR NOT NULL,
+    category_id INT,
+    doors INT,
+    picture BLOB,
+    car_condition VARCHAR(255),
+    available BOOLEAN,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+-- Create the 'employees' table
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    title VARCHAR(50),
+    notes TEXT
+);
+
+-- Create the 'customers' table
+CREATE TABLE customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    driver_license_number VARCHAR(20) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    address VARCHAR(255),
+    city VARCHAR(50),
+    zip_code VARCHAR(20),
+    notes TEXT
+);
+
+-- Create the 'rental_orders' table
+CREATE TABLE rental_orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    customer_id INT,
+    car_id INT,
+    car_condition VARCHAR(255),
+    tank_level DECIMAL(4, 2),
+    kilometrage_start INT,
+    kilometrage_end INT,
+    total_kilometrage INT,
+    start_date DATE,
+    end_date DATE,
+    total_days INT,
+    rate_applied DECIMAL(8, 2),
+    tax_rate DECIMAL(4, 2),
+    order_status VARCHAR(20),
+    notes TEXT,
+    FOREIGN KEY (employee_id) REFERENCES employees(id),
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (car_id) REFERENCES cars(id)
+);
+
+-- Populate the 'categories' table with 3 records
+INSERT INTO categories (category, daily_rate, weekly_rate, monthly_rate, weekend_rate) VALUES
+    ('Economy', 40.00, 250.00, 950.00, 60.00),
+    ('Compact', 50.00, 300.00, 1100.00, 70.00),
+    ('SUV', 70.00, 400.00, 1500.00, 90.00);
+
+-- Populate the 'cars' table with 3 records
+INSERT INTO cars (plate_number, make, model, car_year, category_id, doors, available) VALUES
+    ('ABC123', 'Toyota', 'Corolla', 2021, 1, 4, true),
+    ('XYZ456', 'Honda', 'Civic', 2022, 2, 4, true),
+    ('DEF789', 'Ford', 'Explorer', 2020, 3, 5, true);
+
+-- Populate the 'employees' table with 3 records
+INSERT INTO employees (first_name, last_name, title, notes) VALUES
+    ('John', 'Doe', 'Manager', 'Responsible for managing rental operations.'),
+    ('Jane', 'Smith', 'Agent', 'Assists customers in the rental process.'),
+    ('Bob', 'Johnson', 'Technician', 'Handles maintenance and inspection of rental cars.');
+
+-- Populate the 'customers' table with 3 records
+INSERT INTO customers (driver_license_number, full_name, address, city, zip_code, notes) VALUES
+    ('DL123456', 'Alice Johnson', '123 Main St', 'Cityville', '12345', 'Regular customer'),
+    ('DL789012', 'Bob Williams', '456 Oak St', 'Townsville', '67890', 'Business account'),
+    ('DL345678', 'Charlie Brown', '789 Pine St', 'Villagetown', '54321', 'Frequent renter');
+
+-- Populate the 'rental_orders' table with 3 records
+INSERT INTO rental_orders (employee_id, customer_id, car_id, car_condition, tank_level, kilometrage_start, kilometrage_end, total_kilometrage, start_date, end_date, total_days, rate_applied, tax_rate, order_status, notes) VALUES
+    (1, 1, 1, 'Excellent', 0.8, 10000, 10200, 200, '2022-01-01', '2022-01-04', 3, 250.00, 0.10, 'Completed', 'Routine rental'),
+    (2, 2, 2, 'Good', 0.7, 12000, 12250, 250, '2022-02-05', '2022-02-10', 5, 300.00, 0.12, 'In Progress', 'Business rental'),
+    (3, 3, 3, 'Very Good', 0.9, 8000, 8150, 150, '2022-03-15', '2022-03-18', 3, 400.00, 0.15, 'Completed', 'Frequent renter discount');
+
+
+13.INSERT INTO towns (name) VALUES
+    ('Sofia'),
+    ('Plovdiv'),
+    ('Varna'),
+    ('Burgas');
+
+-- Insert data into the 'departments' table
+INSERT INTO departments (name) VALUES
+    ('Engineering'),
+    ('Sales'),
+    ('Marketing'),
+    ('Software Development'),
+    ('Quality Assurance');
+
+-- Insert data into the 'addresses' table
+INSERT INTO addresses (address_text, town_id) VALUES
+    ('123 Main St, Sofia', 1),
+    ('456 Oak St, Plovdiv', 2),
+    ('789 Pine St, Varna', 3),
+    ('101 Maple St, Burgas', 4);
+
+-- Insert data into the 'employees' table
+INSERT INTO employees (first_name, middle_name, last_name, job_title, department_id, hire_date, salary, address_id) VALUES
+    ('Ivan', 'Ivanov', 'Ivanov', '.NET Developer', 4, '2013-02-01', 3500.00, 1),
+    ('Petar', 'Petrov', 'Petrov', 'Senior Engineer', 1, '2004-03-02', 4000.00, 2),
+    ('Maria', 'Petrova', 'Ivanova', 'Intern', 5, '2016-08-28', 525.25, 3),
+    ('Georgi', 'Terziev', 'Ivanov', 'CEO', 2, '2007-12-09', 3000.00, 4),
+    ('Peter', 'Pan', 'Pan', 'Intern', 3, '2016-08-28', 599.88, 1);
+
+
+14.SELECT * FROM towns;
+
+SELECT * FROM departments;
+
+SELECT * FROM employees;
+
+
+16.SELECT name FROM towns;
+
+
+SELECT name FROM departments;
+
+
+SELECT first_name, last_name, job_title, salary FROM employees
+ORDER BY salary DESC;  
+
+
+17.UPDATE employees
+SET salary = salary * 1.10;
+
+
+SELECT salary FROM employees;
+
