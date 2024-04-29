@@ -1,103 +1,162 @@
 # MYSQL-course-education-in-SoftUni
 Courses from my education  in @SoftUni
-Exercises MYSQL: Data Definition and Data Types
-0.	Create Tables
-In the newly created database Minions add table minions (id, name, age). Then add new table towns (town_id, name). Set id and town_id columns of both tables to be primary key as constraint, id's must be auto increment. Submit yours create table queries in Judge together for both tables (one after another separated by ";") as Run queries & check DB.
-1.	Alter Minions Table
-Before continuing with the next assignments, rename the town_id to id using Workbench's GUI.
-Do not submit this query on the Judge System.
-Change the structure of the Minions table to have new column town_id that would be of the same type as the id column of towns table. Add new constraint that makes town_id foreign key and references to id column of towns table. Submit your create table query in Judge as MySQL run skeleton, run queries & check DB
-2.	Insert Records in Both Tables
-Populate both tables with sample records given in the table below.
-minions		towns
-id	name	age	town_id		id	name
-1	Kevin	22	1		1	Sofia
-2	Bob	15	3		2	Plovdiv
-3	Steward	NULL	2		3	Varna
-Use only insert SQL queries. Submit your INSERT statements in Judge as Run skeleton, run queries & check DB.
-3.	Truncate Table Minions
-Delete all the data from the minions table using SQL query. Submit your query in Judge as Run skeleton, run queries & check DB.
-4.	Drop All Tables
-Delete all tables from the minions database using SQL query. Submit your query in Judge as Run skeleton, run queries & check DB.
-5.	Create Table People
-Using SQL query create table "people" with columns:
-•	id – unique number for every person there will be no more than 231-1people. (Auto incremented)
-•	name – full name of the person will be no more than 200 Unicode characters. (Not null)
-•	picture – image with size up to 2 MB. (Allow nulls)
-•	height –  In meters. Real number precise up to 2 digits after floating point. (Allow nulls)
-•	weight –  In kilograms. Real number precise up to 2 digits after floating point. (Allow nulls)
-•	gender – Possible states are m or f. (Not null)
-•	birthdate – (Not null)
-•	biography – detailed biography of the person it can contain max allowed Unicode characters. (Allow nulls)
-Make id primary key. Populate the table with 5 records.  Submit your CREATE and INSERT statements in Judge as Run queries & check DB.
-6.	Create Table Users
-Using SQL query create table users with columns:
-•	id – unique number for every user. There will be no more than 263-1 users. (Auto incremented)
-•	username – unique identifier of the user will be no more than 30 characters (non Unicode). (Required)
-•	password – password will be no longer than 26 characters (non Unicode). (Required)
-•	profile_picture – image with size up to 900 KB. 
-•	last_login_time
-•	is_deleted – shows if the user deleted his/her profile. Possible states are true or false.
-Make id primary key. Populate the table with 5 records. Submit your CREATE and INSERT statements. Submit your CREATE and INSERT statements as Run queries & check DB.
-7.	Change Primary Key
-Using SQL queries modify table users from the previous task. First remove current primary key then create new primary key that would be combination of fields id and username. The initial primary key name on id is pk_users. Submit your query in Judge as Run skeleton, run queries & check DB.
-8.	Set Default Value of a Field
-Using SQL queries modify table users. Make the default value of last_login_time field to be the current time. Submit your query in Judge as Run skeleton, run queries & check DB.
-9.	 Set Unique Field
-Using SQL queries modify table users. Remove username field from the primary key so only the field id would be primary key. Now add unique constraint to the username field. The initial primary key name on (id, username) is pk_users. Submit your query in Judge as Run skeleton, run queries & check DB.
-10.	Movies Database
-Using SQL queries create Movies database with the following entities:
-•	directors (id, director_name, notes) 
-o	director_name cannot be null
-•	genres (id, genre_name, notes) 
-o	genre_name cannot be null
-•	categories (id, category_name, notes)  
-o	category_name cannot be null
-•	movies (id, title, director_id, copyright_year, length, genre_id, category_id, rating, notes)
-o	title cannot be null
-Set most appropriate data types for each column. Set primary key to each table. Populate each table with 5 records. Make sure the columns that are present in 2 tables would be of the same data type. Consider which fields are always required and which are optional. Submit your CREATE TABLE and INSERT statements as Run queries & check DB.
-11.	Car Rental Database
-Using SQL queries create car_rental database with the following entities:
-•	categories (id, category, daily_rate, weekly_rate, monthly_rate, weekend_rate)
-•	cars (id, plate_number, make, model, car_year, category_id, doors, picture, car_condition, available)
-•	employees (id, first_name, last_name, title, notes)
-•	customers (id, driver_licence_number, full_name, address, city, zip_code, notes)
-•	rental_orders (id, employee_id, customer_id, car_id, car_condition, tank_level, kilometrage_start, kilometrage_end, total_kilometrage, start_date, end_date, total_days, rate_applied, tax_rate, order_status, notes)
-Set most appropriate data types for each column. Set primary key to each table. Populate each table with 3 records. Make sure the columns that are present in 2 tables would be of the same data type. Consider which fields are always required and which are optional. Submit your CREATE TABLE and INSERT statements as Run queries & check DB.
-12.	Basic Insert
-Now create bigger database called soft_uni. You will use database in the future tasks. It should hold information about
-    • towns (id, name)
-    • addresses (id, address_text, town_id)
-    • departments (id, name)
-    • employees (id, first_name, middle_name, last_name, job_title, department_id, hire_date, salary, address_id)
-Id columns are auto incremented starting from 1 and increased by 1 (1, 2, 3, 4…). Make sure you use appropriate data types for each column. Add primary and foreign keys as constraints for each table. Use only SQL queries. Consider which fields are always required and which are optional.
-Do not submit creation of database only the insert statements.
 
-name	job_title	department	hire_date	salary
-Ivan Ivanov Ivanov	.NET Developer	Software Development	01/02/2013	3500.00
-Petar Petrov Petrov	Senior Engineer	Engineering	02/03/2004	4000.00
-Maria Petrova Ivanova	Intern	Quality Assurance	28/08/2016	525.25
-Georgi Terziev Ivanov	CEO	Sales	09/12/2007	3000.00
-Peter Pan Pan	Intern	Marketing	28/08/2016	599.88
-Use the SoftUni database and insert some data using SQL queries.
-•	towns: Sofia, Plovdiv, Varna, Burgas
-•	departments: Engineering, Sales, Marketing, Software Development, Quality Assurance
-•	employees:
+Exercises: Built-in Functions
+Part I – Queries for SoftUni Database
+1.	Find Names of All Employees by First Name
+Write a SQL query to find first and last names of all employees whose first name starts with "Sa" (case insensitively). Order the information by id. Submit your query statements as Prepare DB & run queries.
 
-Submit your INSERT queries in Judge as Run skeleton, run queries & check DB.
-13.	Basic Select All Fields
-Use the soft_uni database and first select all records from the towns, then from departments and finally from employees table. Use SQL queries and submit them to Judge at once. Submit your query statements as Prepare DB & Run queries.
-14.	Basic Select All Fields and Order Them
-Modify queries from previous problem by sorting:
-•	towns - alphabetically by name
-•	departments - alphabetically by name
-•	employees - descending by salary
-Submit your query statements as Prepare DB & Run queries.
-15.	Basic Select Some Fields
-Modify queries from previous problem to show only some of the columns. For table:
-•	towns – name
-•	departments – name
-•	employees – first_name, last_name, job_title, salary
-Keep the ordering from the previous problem. Submit your query statements as Prepare DB & Run queries.
-16.	Increase Employees Salary
-Use softuni database and increase the salary of all employees by 10%. Then select only salary column from the employees table. Submit your query statements as Prepare DB & Run queries.
+Example
+first_name	last_name
+Sariya	Harnpadoungsataya
+Sandra	Reategui Alayo
+…	…
+2.	Find Names of All Employees by Last Name
+Write a SQL query to find first and last names of all employees whose last name contains "ei" (case insensitively). Order the information by id. Submit your query statements as Prepare DB & run queries.
+Example
+first_name	last_name
+Kendall	Keil
+Christian	Kleinerman
+…	…
+3.	Find First Names of All Employees
+Write a SQL query to find the first names of all employees in the departments with ID 3 or 10 and whose hire year is between 1995 and 2005 inclusively. Order the information by id. Submit your query statements as Prepare DB & run queries.
+Example
+first_name
+Deborah
+Wendey
+Candy
+…
+4.	Find All Employees Except Engineers
+Write a SQL query to find the first and last names of all employees whose job titles does not contain "engineer". Order the information by id. Submit your query statements as Prepare DB & run queries.
+
+Example
+first_name	last_name
+Guy	Gilbert
+Kevin	Brown
+Rob	Walters
+…	…
+5.	Find Towns with Name Length
+Write a SQL query to find town names that are 5 or 6 symbols long and order them alphabetically by town name. Submit your query statements as Prepare DB & run queries.
+
+Example
+name
+Berlin
+Duluth
+Duvall
+…
+6.	 Find Towns Starting With
+Write a SQL query to find all towns that start with letters M, K, B or E (case insensitively). Order them alphabetically by town name. Submit your query statements as Prepare DB & run queries.
+
+Example
+town_id	name
+5	Bellevue
+31	Berlin
+30	Bordeaux
+…	…
+7.	 Find Towns Not Starting With
+Write a SQL query to find all towns that do not start with letters R, B or D (case insensitively). Order them alphabetically by name. Submit your query statements as Prepare DB & run queries.
+
+Example
+town_id	name
+2	Calgary
+23	Cambridge
+15	Carnation
+…	…
+8.	Create View Employees Hired After 2000 Year
+Write a SQL query to create view v_employees_hired_after_2000 with the first and the last name of all employees hired after 2000 year. Select all from the created view. Submit your queries as Run skeleton, run queries & check DB.
+
+Example
+first_name	last_name
+Steven	Selikoff
+Peter	Krebs
+Stuart	Munson
+...	...
+
+
+	
+9.	Length of Last Name
+Write a SQL query to find the first and last names of all employees whose last name is exactly 5 characters long.
+
+Example
+first_name	last_name
+Kevin	Brown
+Terri	Duffy
+Jo	Brown
+Diane	Glimp
+…	…
+Part II – Queries for Geography Database 
+10.	Countries Holding 'A' 3 or More Times
+Find all countries that hold the letter 'A' in their name at least 3 times (case insensitively), sorted by ISO code. Display the country name and the ISO code. Submit your query statements as Prepare DB & run queries.
+
+Example
+country_name	iso_code
+Afghanistan	AFG
+Albania	ALB
+…	…
+11.	 Mix of Peak and River Names
+Combine all peak names with all river names, so that the last letter of each peak name is the same as the first letter of its corresponding river name. Display the peak name, the river name, and the obtained mix(converted to lower case). Sort the results by the obtained mix alphabetically. Submit your query statements as Prepare DB & run queries.
+Example
+peak_name	river_name	mix
+Aconcagua	Amazon	aconcaguamazon
+Aconcagua	Amur	aconcaguamur
+Banski Suhodol	Lena	banski suhodolena
+…	…	…
+Part III – Queries for Diablo Database
+12.	Games from 2011 and 2012 Year
+Find the top 50 games ordered by start date, then by name. Display only the games from the years 2011 and 2012. Display the start date in the format "YYYY-MM-DD". Submit your query statements as Prepare DB & run queries.
+
+Example
+name	start
+Rose Royalty	2011-01-05
+London	2011-01-13
+Broadway	2011-01-16
+…	…
+13.	 User Email Providers
+Find information about the email providers of all users. Display the user_name and the email provider. Sort the results by email provider alphabetically, then by username. Submit your query statements as Prepare DB & run queries.
+Example
+user_name	email provider
+Pesho	abv.bg
+monoxidecos	astonrasuna.com
+bashsassafras	balibless.com
+…	…
+14.	 Get Users with IP Address Like Pattern
+Find the user_name and the ip_address for each user, sorted by user_name alphabetically. Display only the rows, where the ip_address matches the pattern: "___.1%.%.___". Submit your query statements as Prepare DB & run queries.
+Example
+user_name	ip_address
+bindbawdy	192.157.20.222
+evolvingimportant	223.175.227.173
+inguinalself	255.111.250.207
+15.	 Show All Games with Duration and Part of the Day
+Find all games with their corresponding part of the day and duration. Parts of the day should be Morning (start time is >= 0 and < 12), Afternoon (start time is >= 12 and < 18), Evening (start time is >= 18 and < 24). Duration should be Extra Short (smaller or equal to 3), Short (between 3 and 6 including), Long (between 6 and 10 including) and Extra Long in any other cases or without duration. Submit your query statements as Prepare DB & run queries
+Example
+game	Part of the Day	Duration
+Aithusa	Evening	Short
+Acid green	Morning	Long
+Apple	Morning	Short
+Broadway	Morning	Short
+Ancalagon	Morning	Short
+Allium drumstick	Morning	Extra Long
+…	…	…
+Part IV – Date Functions Queries
+16.	 Orders Table
+You are given a table orders (id, product_name, order_date) filled with data. Consider that the payment for an order must be accomplished within 3 days after the order date. Also the delivery date is up to 1 month. Write a query to show each product's name, order date, pay and deliver due dates. Submit your query statements as Prepare DB & run queries.
+Original Table
+id	product_name	order_date
+1	Butter	2016-09-19 00:00:00
+2	Milk	2016-09-30 00:00:00
+3	Cheese	2016-09-04 00:00:00
+4	Bread	2015-12-20 00:00:00
+5	Tomatoes	2015-01-01 00:00:00
+…	…	…
+Output
+product_name	order_date	pay_due	deliver_due
+Butter	2016-09-19 00:00:00	2016-09-22 00:00:00	2016-10-19 00:00:00
+Milk	2016-09-30 00:00:00	2016-10-03 00:00:00	2016-10-30 00:00:00
+Cheese	2016-09-04 00:00:00	2016-09-07 00:00:00	2016-10-04 00:00:00
+Bread	2015-12-20 00:00:00	2015-12-23 00:00:00	2016-01-20 00:00:00
+Tomatoes	2015-01-01 00:00:00	2015-01-04 00:00:00	2015-02-01 00:00:00
+…	…	…	…
+
+
+
+
